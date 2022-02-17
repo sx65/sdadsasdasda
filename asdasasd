@@ -144,6 +144,7 @@ for i,d in pairs(toggles) do
     end
 end
 
+
 inputservice.InputBegan:Connect(function(input)
         if enabled then
             if input.KeyCode == Enum.KeyCode.Up then
