@@ -238,7 +238,7 @@ local s,e = pcall(function()
         select.Visible    = enabled
         --top.Position      = frame.Position
         --text.Position     = Vector2.new(frame.Position.X + (top.Size.X / 2) - (text.TextBounds.X / 2), frame.Position.Y + (top.Size.Y / 2) - (text.TextBounds.Y / 2))
-        local offset      = 5
+        local offset      = 10
         for i,d in pairs(toggles) do
             d["Text"].Visible = enabled
             if d["Type"] == "Section" then
