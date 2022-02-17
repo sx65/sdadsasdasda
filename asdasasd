@@ -64,31 +64,46 @@ actionservice:BindActionAtPriority("NoKeys", function()
 end, false, Enum.ContextActionPriority.High.Value, Enum.KeyCode.Up, Enum.KeyCode.Down, Enum.KeyCode.Left, Enum.KeyCode.Right)
 
 for i,d in pairs(toggles) do
-    if d["Type"] == "Section" then
+	if d["Type"] == "Section" then
         local name         = Drawing.new("Text")
-        name.Text          = "["..tostring(d["Name"]).."]"
-        name.Color         = d["Color"] or Color3.fromRGB(200,0,8)
+        name.Text          = d["Name"]
+        name.Color         = d["Color"] or Color3.fromRGB(255,255,0)
         name.Transparency  = 1
         name.Size          = 18
         name.Visible       = true
         name.Font          = 3
+        name.Outline       = true
+        name.OutlineColor  = Color3.fromRGB(0,0,0)
         toggles[i]["Text"] = name
     end
     if d["Type"] == "Switch" then
         switches = switches + 1
         local name           = Drawing.new("Text")
         name.Text            = d["Name"]
-        name.Color           = Color3.fromRGB(234,60,83)
+        name.Color           = Color3.fromRGB(255,255,255)
         name.Transparency    = 1
         name.Size            = 18
         name.Visible         = true
         name.Font            = 3
+        name.Outline         = true
+        name.OutlineColor    = Color3.fromRGB(0,0,0)
+        local name2          = Drawing.new("Text")
+        name2.Text           = 'OFF'
+        name2.Color          = Color3.fromRGB(255,255,255)
+        name2.Transparency   = 1
+        name2.Size           = 18
+        name2.Visible        = true
+        name2.Font           = 3
+        name2.Outline         = true
+        name2.OutlineColor    = Color3.fromRGB(0,0,0)
         toggles[i]["Text"]   = name
+        toggles[i]["Text2"]  = name2
         toggles[i]["ID"]     = switches
         toggles[i]["State"]  = false
         toggles[i]["Handle"] = function(input)
             toggles[i]["State"] = not toggles[i]["State"]
-            name.Color = (toggles[i]["State"] and Color3.fromRGB(0,255,0) or Color3.fromRGB(234,60,83))
+            name2.Color = (toggles[i]["State"] and Color3.fromRGB(0,170,255) or Color3.fromRGB(255,255,255))
+            name2.Text = (toggles[i]["State"] and "ON" or "OFF")
             if toggles[i]["Callback"] then
                 toggles[i]["Callback"](toggles[i]["State"])
             end
@@ -98,20 +113,32 @@ for i,d in pairs(toggles) do
         switches = switches + 1
         local name            = Drawing.new("Text")
         name.Text             = d["Name"]
-        name.Color            = Color3.fromRGB(0,191,255)
+        name.Color            = Color3.fromRGB(255,255,255)
         name.Transparency     = 1
         name.Size             = 18
         name.Visible          = true
         name.Font             = 3
+        name.Outline          = true
+        name.OutlineColor     = Color3.fromRGB(0,0,0)
+		local name2           = Drawing.new("Text")
+        name2.Text            = d["Name"]
+        name2.Color           = Color3.fromRGB(255,255,255)
+        name2.Transparency    = 1
+        name2.Size            = 18
+        name2.Visible         = true
+        name2.Font            = 3
+        name2.Outline         = true
+        name2.OutlineColor    = Color3.fromRGB(0,0,0)
         toggles[i]["Text"]    = name
+        toggles[i]["Text2"]   = name2
         toggles[i]["ID"]      = switches
         toggles[i]["Value"]   = 1
         toggles[i]["Choices"] = toggles[i]["Choices"] or {"Nothing"}
-        name.Text             = d["Name"] .. " < " .. tostring(toggles[i]["Choices"][1]) .. " >"
+        name2.Text             = tostring(toggles[i]["Choices"][1])
         toggles[i]["Handle"]  = function(input)
             toggles[i]["State"] = not toggles[i]["State"]
             toggles[i]["Value"] = (input == 1 and (((toggles[i]["Value"] < #toggles[i]["Choices"]) and (toggles[i]["Value"] + 1)) or 1) or (input == 0 and ((toggles[i]["Value"] > 1 and (toggles[i]["Value"] - 1)) or #toggles[i]["Choices"])))
-            name.Text           = d["Name"] .. " < " .. tostring(toggles[i]["Choices"][toggles[i]["Value"]]) .. " >"
+            name2.Text           = tostring(toggles[i]["Choices"][toggles[i]["Value"]])
             if toggles[i]["Callback"] then
                 toggles[i]["Callback"](tostring(toggles[i]["Choices"][toggles[i]["Value"]]))
             end
@@ -121,22 +148,34 @@ for i,d in pairs(toggles) do
         switches = switches + 1
         local name           = Drawing.new("Text")
         name.Text            = d["Name"]
-        name.Color           = Color3.fromRGB(0,191,255)
+        name.Color           = Color3.fromRGB(255,255,255)
         name.Transparency    = 1
         name.Size            = 18
         name.Visible         = true
         name.Font            = 3
+        name.Outline         = true
+        name.OutlineColor    = Color3.fromRGB(0,0,0)
+        local name2          = Drawing.new("Text")
+        name2.Text           = d["Name"]
+        name2.Color          = Color3.fromRGB(255,255,255)
+        name2.Transparency   = 1
+        name2.Size           = 18
+        name2.Visible        = true
+        name2.Font           = 3
+        name2.Outline         = true
+        name2.OutlineColor    = Color3.fromRGB(0,0,0)
         toggles[i]["Text"]   = name
+        toggles[i]["Text2"]  = name2
         toggles[i]["ID"]     = switches
         toggles[i]["Value"]  = toggles[i]["Default"] or 0
         toggles[i]["Min"]    = toggles[i]["Min"] or 0
         toggles[i]["Max"]    = toggles[i]["Max"] or 100
         toggles[i]["Step"]   = toggles[i]["Step"] or 1
-        name.Text            = d["Name"] .. " < " .. tostring(toggles[i]["Value"]) .. " >"
+        name2.Text           = tostring(toggles[i]["Value"])
         toggles[i]["Handle"] = function(input)
             toggles[i]["State"] = not toggles[i]["State"]
             toggles[i]["Value"] = ((input == 1 and (((toggles[i]["Value"] + toggles[i]["Step"]) <= toggles[i]["Max"]) and toggles[i]["Value"] + toggles[i]["Step"] or toggles[i]["Max"])) or ((((toggles[i]["Value"] - toggles[i]["Step"]) >= toggles[i]["Min"]) and toggles[i]["Value"] - toggles[i]["Step"]) or toggles[i]["Min"]))
-            name.Text           = d["Name"] .. " < " .. tostring(toggles[i]["Value"]) .. " >"
+            name2.Text           = tostring(toggles[i]["Value"])
             if toggles[i]["Callback"] then
                 toggles[i]["Callback"](toggles[i]["Value"])
             end
