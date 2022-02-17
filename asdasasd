@@ -67,7 +67,7 @@ select.Visible = true
 select.Thickness = 0
 select.Filled = true
 select.Size = Vector2.new(0,0)
-select.Color = Color3.fromRGB(255,255,255)
+select.Color = Color3.fromRGB(35,35,35)
 select.Transparency = 0.05
 
 actionservice:BindActionAtPriority('NoKeys', function()
