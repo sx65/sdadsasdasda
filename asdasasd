@@ -234,7 +234,7 @@ local s,e = pcall(function()
 repeat
     local screensize  = workspace.CurrentCamera.ViewportSize
     select.Visible    = enabled
-    local offset      = 5
+    local offset      = 10
     for i,d in pairs(toggles) do
         d["Text"].Visible = true
         if d["Type"] == "Section" then
