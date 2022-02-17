@@ -55,6 +55,13 @@ local enabled = true
 local inputservice  = game:GetService("UserInputService")
 local actionservice = game:GetService("ContextActionService")
 
+local frame        = Drawing.new("Square")
+frame.Visible      = true
+frame.Thickness    = 0
+frame.Filled       = true
+frame.Size         = Vector2.new(200,0)
+frame.Color        = Color3.fromRGB(35,35,35)
+
 local select = Drawing.new('Square')
 select.Visible = true
 select.Thickness = 0
