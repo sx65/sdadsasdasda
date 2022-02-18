@@ -71,7 +71,7 @@ for i,d in pairs(toggles) do
 	if d["Type"] == "Section" then
         local name         = Drawing.new("Text")
         name.Text          = d["Name"]
-        name.Color         = d["Color"] or Color3.fromRGB(255,255,0)
+        name.Color         = d["Color"] or Color3.fromRGB(35,35,35)
         name.Transparency  = 1
         name.Size          = 18
         name.Visible       = true
@@ -84,7 +84,7 @@ for i,d in pairs(toggles) do
         switches = switches + 1
         local name           = Drawing.new("Text")
         name.Text            = d["Name"]
-        name.Color           = Color3.fromRGB(255,255,255)
+        name.Color           = Color3.fromRGB(35,35,35)
         name.Transparency    = 1
         name.Size            = 18
         name.Visible         = true
@@ -117,7 +117,7 @@ for i,d in pairs(toggles) do
         switches = switches + 1
         local name            = Drawing.new("Text")
         name.Text             = d["Name"]
-        name.Color            = Color3.fromRGB(255,255,255)
+        name.Color            = Color3.fromRGB(35,35,35)
         name.Transparency     = 1
         name.Size             = 18
         name.Visible          = true
@@ -152,7 +152,7 @@ for i,d in pairs(toggles) do
         switches = switches + 1
         local name           = Drawing.new("Text")
         name.Text            = d["Name"]
-        name.Color           = Color3.fromRGB(255,255,255)
+        name.Color           = Color3.fromRGB(35,35,35)
         name.Transparency    = 1
         name.Size            = 18
         name.Visible         = true
