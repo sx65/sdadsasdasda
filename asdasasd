@@ -1,5 +1,4 @@
-
-
+--Credits to https://v3rmillion.net/member.php?action=profile&uid=1356726 for base build
 local name2         = Drawing.new("Text")
 name2.Text          = "Yun Premium"
 name2.Color         = Color3.fromRGB(255,0,255)
@@ -15,14 +14,14 @@ name2.Position      = Vector2.new(10,40)
 local gui = {}
 local builder = {}
 
-function builder:MakeSection(name, settings)
+function builder:Create(name, settings)
     settings = settings or {}
     settings["Name"] = name
     settings["Type"] = "Section"
     gui[#gui + 1] = settings
 end
 
-function builder:MakeSlider(name, callback, settings)
+function builder:AddSlider(name, callback, settings)
     settings = settings or {}
     settings["Name"]      = name
     settings["Type"]      = "Slider"
@@ -30,7 +29,7 @@ function builder:MakeSlider(name, callback, settings)
     gui[#gui + 1] = settings
 end
 
-function builder:MakeToggle(name, callback, settings)
+function builder:AddToggle(name, callback, settings)
     settings = settings or {}
     settings["Name"]      = name
     settings["Type"]      = "Switch"
@@ -38,7 +37,7 @@ function builder:MakeToggle(name, callback, settings)
     gui[#gui + 1] = settings
 end
 
-function builder:MakeSelect(name, callback, settings)
+function builder:AddList(name, callback, settings)
     settings = settings or {}
     settings["Name"]      = name
     settings["Type"]      = "Select"
@@ -47,37 +46,26 @@ function builder:MakeSelect(name, callback, settings)
 end
 
 function builder:build()
-    spawn(function()
-        local toggles = gui
-        local switches = 0
+	spawn(function()
+		local toggles = gui
+		local switches = 0
 local selected = 1
-local enabled  = true
+local enabled = true
 
 local inputservice  = game:GetService("UserInputService")
 local actionservice = game:GetService("ContextActionService")
 
+local select = Drawing.new('Square')
+select.Visible = true
+select.Thickness = 0
+select.Filled = true
+select.Size = Vector2.new(0,0)
+select.Color = Color3.fromRGB(255,255,255)
+select.Transparency = 0.05
 
-local frame        = Drawing.new("Square")
-frame.Visible      = true
-frame.Thickness    = 0
-frame.Filled       = true
-frame.Size         = Vector2.new(200,0)
-frame.Color        = Color3.fromRGB(35,35,35)
-frame.Transparency = 0.8
-
-local select        = Drawing.new("Square")
-select.Visible      = true
-select.Thickness    = 0
-select.Filled       = true
-select.Size         = Vector2.new(0,0)
-select.Color        = Color3.fromRGB(117,218,255)
-select.Transparency = 0.2
-
-actionservice:BindActionAtPriority("NoKeys", function()
-    return Enum.ContextActionResult.Sink
+actionservice:BindActionAtPriority('NoKeys', function()
+	return Enum.ContextActionResult.Sink
 end, false, Enum.ContextActionPriority.High.Value, Enum.KeyCode.Up, Enum.KeyCode.Down, Enum.KeyCode.Left, Enum.KeyCode.Right)
-
-
 
 for i,d in pairs(toggles) do
 	if d["Type"] == "Section" then
@@ -238,20 +226,17 @@ end)
 local s,e = pcall(function()
 repeat
     local screensize  = workspace.CurrentCamera.ViewportSize
-    frame.Position    = Vector2.new(screensize.X - (frame.Size.X), screensize.Y / 2 - (frame.Size.Y / 2))
-    frame.Visible     = enabled
     select.Visible    = enabled
-    --top.Position      = frame.Position
-    --text.Position     = Vector2.new(frame.Position.X + (top.Size.X / 2) - (text.TextBounds.X / 2), frame.Position.Y + (top.Size.Y / 2) - (text.TextBounds.Y / 2))
     local offset      = 5
     for i,d in pairs(toggles) do
-        d["Text"].Visible = enabled
+        d["Text"].Visible = true
         if d["Type"] == "Section" then
-            d["Text"].Position = Vector2.new(frame.Position.X + 10, frame.Position.Y + offset)
+            d["Text"].Position = Vector2.new(300, 5 + offset)
             offset = offset + d["Text"].TextBounds.Y
         end
         if d["Type"] == "Switch" then
-            d["Text"].Position = Vector2.new(frame.Position.X + 25, frame.Position.Y + offset)
+            d["Text"].Position = Vector2.new(300, 5 + offset)
+            d["Text2"].Position = Vector2.new(120+ d["Text"].Position.X, 5 + offset)
             offset = offset + d["Text"].TextBounds.Y
             if switches > 0 and d["ID"] == selected then
                 select.Size = d["Text"].TextBounds + Vector2.new(6,0)
@@ -259,7 +244,8 @@ repeat
             end
         end
         if d["Type"] == "Slider" then
-            d["Text"].Position = Vector2.new(frame.Position.X + 25, frame.Position.Y + offset)
+            d["Text"].Position = Vector2.new(300, 5 + offset)
+            d["Text2"].Position = Vector2.new(120+ d["Text"].Position.X, 5 + offset)
             offset = offset + d["Text"].TextBounds.Y
             if switches > 0 and d["ID"] == selected then
                 select.Size = d["Text"].TextBounds + Vector2.new(6,0)
@@ -267,7 +253,8 @@ repeat
             end
         end
         if d["Type"] == "Select" then
-            d["Text"].Position = Vector2.new(frame.Position.X + 25, frame.Position.Y + offset)
+            d["Text"].Position = Vector2.new(300, 5 + offset)
+            d["Text2"].Position = Vector2.new(120+ d["Text"].Position.X, 5 + offset)
             offset = offset + d["Text"].TextBounds.Y
             if switches > 0 and d["ID"] == selected then
                 select.Size = d["Text"].TextBounds + Vector2.new(6,0)
@@ -275,20 +262,13 @@ repeat
             end
         end
     end
-    frame.Size = Vector2.new(frame.Size.X, offset + 10)
     wait()
 until false
 end)
 if s == false then
     warn(e)
 end
-for i,d in pairs(toggles) do
-    if d["Text"] then
-        d["Text"]:Remove()
-    end
-end
 select:Remove()
-frame:Remove()
     end)
 end
 
